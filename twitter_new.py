@@ -2,9 +2,12 @@ import tweepy
 from datetime import datetime
 from pyfiglet import Figlet 
 import os
+from prompt_toolkit import prompt
 
 """
 将以下内容添加到 .bashrc 或 .zshrc 文件中,取决于你用的shell是哪种类型
+adding following stuff to .bashrc or .zshrc file, depending on which shell you are using
+
 export 'BEARER_TOKEN'='$YOUR_BEARER'
 export 'API_KEY'='$your_api_key'
 export 'API_SECRET'='$your_api_secret'
@@ -35,7 +38,7 @@ def send_tweet_v2(text):
     try:
         # 调用 v2 的创建推文接口
         response = client.create_tweet(text=text)
-        print(f"推文成功！ID: {response.data['id']}")
+        print(f"已发布。ID: {response.data['id']}")
     except tweepy.TweepyException as e:
         print(f"发送失败: {e}")
 
@@ -43,28 +46,29 @@ def show_banner():
     # 动态问候语
     hour = datetime.now().hour
     if 5 <= hour < 12:
-        greeting = "🏖️ 早上好咯～想讲点什么？"
+        greeting = "🌧️ Mornin. Anything wanna share? :)"
     elif 12 <= hour < 18:
-        greeting = "☀️ 下午好！"
+        greeting = "🌆 Good afternoon, anything wanna share? :)"
     else:
-        greeting = "🌙 晚上好！"
+        greeting = "🌌 late at night. anything wanna share? :)"
 
     # 生成 ASCII 艺术字
     f = Figlet(font='slant')
-    print("\033[36m" + f.renderText('Twitter Bot') + "\033[0m")
-    print(f"{greeting} 当前时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print("\033[36m" + f.renderText('NEW TWEETS') + "\033[0m")
+    print(f"{greeting} \n timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("-" * 50)
 
 if __name__ == "__main__":
     show_banner()  # 显示终端横幅
     
     try:
-        tweet_text = input("有什么话想说：）")
+        
+        tweet_text = prompt("Start typing your tweet: ")
         if len(tweet_text.strip()) == 0:
-            print("\033[33m输入内容为空，取消发送\033[0m")
+            print("\033[33m empty input, cancelled.\033[0m")
         else:
             # 添加时间戳（可选）
             final_text = f"{tweet_text}\n\n[{datetime.now().strftime('%H:%M:%S')}]"
             send_tweet_v2(final_text)
     except KeyboardInterrupt:
-        print("\n\033[33m操作已取消\033[0m")
+        print("\n\033[33mCANCELLED. SEE YA.\033[0m")
