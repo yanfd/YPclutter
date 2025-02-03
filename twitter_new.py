@@ -19,13 +19,6 @@ source ~/.bashrc
 """
 
 def send_tweet_v2(text):
-    # 使用 OAuth1 用户认证（v2 推文需要用户上下文）
-    auth = tweepy.OAuth1UserHandler(
-        consumer_key=os.environ.get("API_KEY"),
-        consumer_secret=os.environ.get("API_SECRET"),
-        access_token=os.environ.get("ACCESS_TOKEN"),
-        access_token_secret=os.environ.get("ACCESS_TOKEN_SECRET")
-    )
     
     # 创建 v2 客户端
     client = tweepy.Client(
@@ -38,9 +31,9 @@ def send_tweet_v2(text):
     try:
         # 调用 v2 的创建推文接口
         response = client.create_tweet(text=text)
-        print(f"已发布。ID: {response.data['id']}")
+        print(f"PUBLISHED. ID: {response.data['id']}")
     except tweepy.TweepyException as e:
-        print(f"发送失败: {e}")
+        print(f"FAILED: {e}")
 
 def show_banner():
     # 动态问候语
@@ -63,12 +56,11 @@ if __name__ == "__main__":
     
     try:
         
-        tweet_text = prompt("Start typing your tweet: ")
+        tweet_text = prompt("Start typing your tweet: \n ")
         if len(tweet_text.strip()) == 0:
             print("\033[33m empty input, cancelled.\033[0m")
         else:
-            # 添加时间戳（可选）
-            final_text = f"{tweet_text}\n\n[{datetime.now().strftime('%H:%M:%S')}]"
+            final_text = f"{tweet_text}"
             send_tweet_v2(final_text)
     except KeyboardInterrupt:
         print("\n\033[33mCANCELLED. SEE YA.\033[0m")
