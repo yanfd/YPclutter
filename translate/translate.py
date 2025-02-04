@@ -55,7 +55,8 @@ async def main():
             pass
         else:
             with open(markdown_file, "a", encoding="utf-8") as file:
-                file.write(f"| {word} | {translated} |\n\n")
+                file.write(f"\n| {word} | {translated} |\n")
+            print(f"| {word} | {translated} |\n\n")
             print(f"Added.\n")
 
 

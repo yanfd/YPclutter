@@ -3,6 +3,7 @@ from datetime import datetime
 from pyfiglet import Figlet 
 import os
 from prompt_toolkit import prompt
+from prompt_toolkit import PromptSession
 
 """
 将以下内容添加到 .bashrc 或 .zshrc 文件中,取决于你用的shell是哪种类型
@@ -55,8 +56,8 @@ if __name__ == "__main__":
     show_banner()  # 显示终端横幅
     
     try:
-        
-        tweet_text = prompt("Start typing your tweet: \n ")
+        session = PromptSession(multiline=True)
+        tweet_text = session.prompt("Start (press Ecs+Enter to finish): \n ")
         if len(tweet_text.strip()) == 0:
             print("\033[33m empty input, cancelled.\033[0m")
         else:
