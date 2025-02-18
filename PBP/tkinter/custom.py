@@ -1,54 +1,20 @@
 import tkinter as tk
 import customtkinter as ctk
 
-def create_transparent_window():
-    root = tk.Tk()
-    root.title("透明调试器")
-    
-    # macOS 透明核心配置
-    root.attributes("-transparent", True)
-    root.config(bg="systemTransparent")
-    root.attributes("-topmost", True)
-    root.attributes("-topmost", False)
-    
-    # 透明中间层
-    canvas = tk.Canvas(root, bg="systemTransparent", highlightthickness=0)
-    canvas.pack(fill="both", expand=True)
-    
-    # 内容容器
-    container = ctk.CTkFrame(
-        canvas,
-        fg_color="#FFFFFF",
-        border_width=2,
-        border_color="#E0E0E0",
-        corner_radius=15
-    )
-    container.pack(padx=40, pady=40)
-    
-    # 调试控件
-    label = ctk.CTkLabel(container, text="✅ 透明背景生效", text_color="#333333")
-    label.pack(pady=15)
-    
-    color_button = ctk.CTkButton(
-        container,
-        text="切换背景色",
-        command=lambda: container.configure(fg_color="#F0F0F0" if container.cget("fg_color") == "#FFFFFF" else "#FFFFFF")
-    )
-    color_button.pack(pady=5)
-    
-    exit_button = ctk.CTkButton(
-        container,
-        text="退出",
-        fg_color="#FF4444",
-        hover_color="#CC0000",
-        command=root.destroy
-    )
-    exit_button.pack(pady=15)
-    
-    root.mainloop()
+# 使用 Tk() 作为主窗口（支持透明）
+root = tk.Tk()
+root.attributes("-transparent", True)  # macOS 透明背景
+root.config(bg="systemTransparent")    # 兼容 macOS 透明背景
 
-if __name__ == "__main__":
-    create_transparent_window()
+# 创建 CustomTkinter 容器（用于承载控件）
+app = ctk.CTkFrame(root, fg_color="#FFFFFF")  # 容器背景设为白色
+app.pack(fill="both", expand=True, padx=20, pady=20)
+
+# 添加控件到容器
+label = ctk.CTkLabel(app, text="透明背景下的控件")
+label.pack()
+
+root.mainloop()
 # import customtkinter as ct
 
 # app = ct.CTk()
