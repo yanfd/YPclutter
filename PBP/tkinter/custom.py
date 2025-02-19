@@ -41,29 +41,49 @@
 
 # root.mainloop()
 
-import customtkinter as ct
+# import customtkinter as ct
 
-app = ct.CTk()
-app.title("CustomTkinterAnimalRewrite")
-app.geometry("300x200")
+# app = ct.CTk()
+# app.title("CustomTkinterAnimalRewrite")
+# app.geometry("300x200")
 
-def update_label(stuff):
-    result_text.configure(text=f'You are a {stuff}')
+# def update_label(stuff):
+#     result_text.configure(text=f'You are a {stuff}')
 
-app._set_appearance_mode("dark")
-label1 = ct.CTkLabel(app, text='which type of animals you are?').pack(padx=10, pady=10)
-options = ["select:","Dog", "Cat", "Bird", "Fish"]
-
-
-xiala = ct.CTkOptionMenu(app,values=options, command=update_label)
-xiala.pack(padx=10, pady=10)
-
-result_text = ct.CTkLabel(app, text="")
-result_text.pack(padx=10, pady=10)
+# app._set_appearance_mode("dark")
+# label1 = ct.CTkLabel(app, text='which type of animals you are?').pack(padx=10, pady=10)
+# options = ["select:","Dog", "Cat", "Bird", "Fish"]
 
 
-app.mainloop()
+# xiala = ct.CTkOptionMenu(app,values=options, command=update_label)
+# xiala.pack(padx=10, pady=10)
 
+# result_text = ct.CTkLabel(app, text="")
+# result_text.pack(padx=10, pady=10)
+
+
+# app.mainloop()
+
+# import customtkinter as ctk
+
+# ctk.set_appearance_mode("dark")  # 启用暗黑模式
+
+# app = ctk.CTk()
+# frame = ctk.CTkFrame(app)
+# frame.pack(pady=20)
+
+# # 第一个组件（左对齐）
+# btn1 = ctk.CTkButton(frame, text="按钮1", fg_color="#007AFF")
+# btn1.pack(side="left", padx=5)
+
+# # 第二个组件（右侧留白）
+# btn2 = ctk.CTkButton(frame, text="按钮2", fg_color="#34C759")
+# btn2.pack(side="left", padx=5)
+
+
+# btn3 = ctk.CTkButton(frame, text="按钮3", fg_color="#34C759")
+# btn3.pack(padx=5)
+# app.mainloop()
 
 
 
@@ -104,3 +124,29 @@ app.mainloop()
 # #     root.mainloop()
 
 
+import customtkinter as ctk
+
+app = ctk.CTk()
+app.geometry("600x400")
+
+# 主容器（深灰色背景）
+main_frame = ctk.CTkFrame(app, fg_color="#2B2B2B")
+main_frame.pack(expand=True, fill="both", padx=10, pady=10)
+
+# 顶部工具栏（蓝色主题）
+toolbar = ctk.CTkFrame(main_frame, height=50, fg_color="#007AFF")
+toolbar.pack(fill="x", pady=(0, 10))
+
+# 内容区域（嵌套两层）
+content_frame = ctk.CTkFrame(main_frame)
+content_frame.pack(expand=True, fill="both")
+
+# 左侧边栏（25% 宽度）
+sidebar = ctk.CTkFrame(content_frame, width=150, fg_color="#3C3C3C")
+sidebar.pack(side="left", fill="y")
+
+# 右侧主内容区（自动扩展）
+main_content = ctk.CTkFrame(content_frame)
+main_content.pack(side="left", expand=True, fill="both", padx=10)
+
+app.mainloop()
