@@ -118,15 +118,15 @@ class TwitterWindow(QMainWindow):
         self.insert_image_button.setStyleSheet("""
             QPushButton {
                 background-color: #FBD35A;
-                color: white;
+                color: black;
                 border: 1px solid white;
-                border-radius: 32px;
+                border-radius: 8px;  # 圆角半径
                 padding: 10px;
                 font-size: 16px;
                 font-weight: bold;
             }
             QPushButton:hover {
-                background-color: #666666;
+                background-color: #FFA500;  # 悬停颜色
             }
         """)
         self.insert_image_button.clicked.connect(self.file_uploading)
@@ -139,20 +139,19 @@ class TwitterWindow(QMainWindow):
         self.send_button.setStyleSheet("""
             QPushButton {
                 background-color: #FBD35A;
-                color: white;
+                color: black;
                 border: 1px solid white;
-                border-radius: 32px;
+                border-radius: 8px;  # 圆角半径
                 padding: 10px;
                 font-size: 16px;
                 font-weight: bold;
             }
             QPushButton:hover {
-                background-color: #666666;
+                background-color: #FFA500;  # 悬停颜色
             }
         """)
         self.send_button.clicked.connect(self.sending)
         layout.addWidget(self.send_button)
-
         # 状态标签
         self.status_label = QLabel("READY")
         self.status_label.setStyleSheet("""
