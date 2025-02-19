@@ -1,26 +1,28 @@
-import customtkinter as ctk
-from tkinter import filedialog
+# import customtkinter as ctk
+# from tkinter import filedialog
 
-def select_file():
-    file_path = filedialog.askopenfilename(
-        title="选择要上传的文件",
-        filetypes=[("所有文件", "*.*"), ("图片", "*.jpg *.png")],
-        initialdir="/Users/你的用户名/Documents" # 默认打开路径
-    )
-    if file_path:
-        print("已选择文件:", file_path)
-        # 在这里添加文件处理逻辑
+# def select_file():
+#     file_path = filedialog.askopenfilename(
+#         title="选择要上传的文件",
+#         filetypes=[("所有文件", "*.*"), ("图片", "*.jpg *.png")],
+#         initialdir="/Users/你的用户名/Documents" # 默认打开路径
+#     )
+#     if file_path:
+#         print("已选择文件:", file_path)
+#         # 在这里添加文件处理逻辑
 
-app = ctk.CTk()
-btn = ctk.CTkButton(
-    app, 
-    text="上传文件", 
-    command=select_file,
-    fg_color="#007AFF",  # macOS 系统按钮蓝色
-    hover_color="#0055CC"
-)
-btn.pack(padx=20, pady=20)
-app.mainloop()
+# app = ctk.CTk()
+# btn = ctk.CTkButton(
+#     app, 
+#     text="上传文件", 
+#     command=select_file,
+#     fg_color="#007AFF",  # macOS 系统按钮蓝色
+#     hover_color="#0055CC"
+# )
+# btn.pack(padx=20, pady=20)
+# app.mainloop()
+
+
 # import tkinter as tk
 # import customtkinter as ctk
 
@@ -38,28 +40,29 @@ app.mainloop()
 # label.pack()
 
 # root.mainloop()
-# import customtkinter as ct
 
-# app = ct.CTk()
-# app.title("CustomTkinterAnimalRewrite")
-# app.geometry("300x200")
+import customtkinter as ct
 
-# def update_label(stuff):
-#     result_text.configure(text=f'You are a {stuff}')
+app = ct.CTk()
+app.title("CustomTkinterAnimalRewrite")
+app.geometry("300x200")
 
-# app._set_appearance_mode("dark")
-# label1 = ct.CTkLabel(app, text='which type of animals you are?').pack(padx=10, pady=10)
-# options = ["select:","Dog", "Cat", "Bird", "Fish"]
+def update_label(stuff):
+    result_text.configure(text=f'You are a {stuff}')
 
-
-# xiala = ct.CTkOptionMenu(app,values=options, command=update_label)
-# xiala.pack(padx=10, pady=10)
-
-# result_text = ct.CTkLabel(app, text="")
-# result_text.pack(padx=10, pady=10)
+app._set_appearance_mode("dark")
+label1 = ct.CTkLabel(app, text='which type of animals you are?').pack(padx=10, pady=10)
+options = ["select:","Dog", "Cat", "Bird", "Fish"]
 
 
-# app.mainloop()
+xiala = ct.CTkOptionMenu(app,values=options, command=update_label)
+xiala.pack(padx=10, pady=10)
+
+result_text = ct.CTkLabel(app, text="")
+result_text.pack(padx=10, pady=10)
+
+
+app.mainloop()
 
 
 
