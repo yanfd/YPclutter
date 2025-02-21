@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from tkinter import filedialog
 import os
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 class ImageProcessorApp(ctk.CTk):
     def __init__(self):
@@ -85,7 +85,7 @@ class ImageProcessorApp(ctk.CTk):
                 width, height = img.size
                 
                 # 🔄 新建画布尺寸计算
-                new_size = (int(width*1.2), int(height*1.2))  # 留出阴影空间
+                new_size = (int(width*1.4), int(height*1.3))  # 留出阴影空间
                 
                 # 创建渐变背景
                 gradient = Image.new('RGB', new_size, color='white')
@@ -139,6 +139,26 @@ class ImageProcessorApp(ctk.CTk):
                     rounded_img, 
                     (image_x, image_y)  # 🔄 使用计算后的坐标
                 )
+
+                #添加文字，绘制文字
+                draw = ImageDraw.Draw(final_image)
+                font_size = int(height * 0.05)
+                try:
+                    font = ImageFont.truetype("Impact.ttf", font_size)
+                except IOError:
+                    font = ImageFont.load_default().font_variant(size=font_size)
+
+                text = "POWERED BY YANFD"
+                # Get text size using font.getbbox() method
+                bbox = font.getbbox(text)
+                text_width = bbox[2] - bbox[0]
+                text_height = bbox[3] - bbox[1]
+                text_x = (new_size[0] - text_width) // 2 #水平居中
+                bottom_margin = new_size[1] - height - (image_y + height)
+                text_y = image_y + height - int(bottom_margin * 0.02) 
+
+                draw.text((text_x, text_y), text, font=font, fill="#191919")
+
 
                 # 保存结果
                 new_path = f"{os.path.splitext(path)[0]}_mockup.png"
