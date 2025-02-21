@@ -78,48 +78,75 @@ class ImageProcessorApp(ctk.CTk):
         new_paths = []
         for path in self.media_paths:
             with Image.open(path) as img:
-                # 获取主要颜色
-                dominant_color = self.get_dominant_color(img)
+                # 🔄 控制圆角半径的主要参数（可调整这个值）
+                RADIUS = 20  # 圆角弧度控制点
                 
-                # 创建新图像，稍大一些以容纳背景和边框
+                dominant_color = self.get_dominant_color(img)
                 width, height = img.size
-                new_width, new_height = width + 200, height + 200
-                new_img = Image.new('RGB', (new_width, new_height), color='white')
+                
+                # 🔄 新建画布尺寸计算
+                new_size = (int(width*1.2), int(height*1.2))  # 留出阴影空间
                 
                 # 创建渐变背景
-                gradient = Image.new('RGB', new_img.size, color='white')
+                gradient = Image.new('RGB', new_size, color='white')
                 draw = ImageDraw.Draw(gradient)
-                for y in range(new_height):
-                    r = int(dominant_color[0] * (1 - y / new_height) + 255 * (y / new_height))
-                    g = int(dominant_color[1] * (1 - y / new_height) + 255 * (y / new_height))
-                    b = int(dominant_color[2] * (1 - y / new_height) + 255 * (y / new_height))
-                    draw.line([(0, y), (new_width, y)], fill=(r, g, b))
+                for y in range(new_size[1]):
+                    # 垂直渐变算法
+                    ratio = y / new_size[1]
+                    r = int(dominant_color[0] * (1 - ratio) + 255 * ratio)
+                    g = int(dominant_color[1] * (1 - ratio) + 255 * ratio)
+                    b = int(dominant_color[2] * (1 - ratio) + 255 * ratio)
+                    draw.line([(0, y), (new_size[0], y)], fill=(r, g, b))
+
+                # 🔄 创建圆角蒙版
+                mask = Image.new('L', img.size, 0)
+                draw = ImageDraw.Draw(mask)
+                draw.rounded_rectangle([(0,0), img.size], radius=RADIUS, fill=255)
                 
-                # 将渐变背景粘贴到新图像上
-                new_img.paste(gradient, (0, 0))
+                # 应用蒙版
+                rounded_img = Image.new('RGBA', img.size, (0,0,0,0))
+                rounded_img.paste(img.convert('RGBA'), (0,0), mask)
                 
-                # 创建Mac风格的边框
-                border = Image.new('RGBA', (width + 40, height + 40), (255, 255, 255, 0))
-                draw = ImageDraw.Draw(border)
-                draw.rounded_rectangle([0, 0, width + 39, height + 39], radius=20, fill=(255, 255, 255, 255))
-                border = border.filter(ImageFilter.GaussianBlur(10))
-                draw = ImageDraw.Draw(border)
-                draw.rounded_rectangle([3, 3, width + 36, height + 36], radius=20, fill=(60, 60, 60, 255))
+                # 🔄 创建阴影层
+                shadow_offset = 25  # 阴影偏移量
+                shadow = Image.new('RGBA', 
+                    (img.width + shadow_offset, img.height + shadow_offset),
+                    (0,0,0,0))
                 
-                # 将原始图像粘贴到边框上
-                border.paste(img, (20, 20))
+                shadow_draw = ImageDraw.Draw(shadow)
+                shadow_draw.rounded_rectangle(
+                    [(shadow_offset, shadow_offset), 
+                    (img.width, img.height)],
+                    radius=RADIUS,
+                    fill=(0,0,0,100)
+                )
+                shadow = shadow.filter(ImageFilter.GaussianBlur(10))
+
+                # 合成所有元素
+                final_image = gradient.convert('RGBA')
                 
-                # 将边框粘贴到新图像上
-                new_img.paste(border, (80, 80), border)
+                # 🔄 计算正确阴影位置（重要修改）
+                image_x = (new_size[0] - width) // 2  # 图片水平居中坐标
+                image_y = (new_size[1] - height) // 2  # 图片垂直居中坐标
                 
-                # 保存新图像
+                # 阴影位置 = 图片位置 + 偏移量（右下方向）
+                shadow_x = image_x + shadow_offset - 15  # 微调-15补偿阴影绘制偏移
+                shadow_y = image_y + shadow_offset - 15
+                
+                final_image.alpha_composite(shadow, (shadow_x, shadow_y))  # 🔄 更新阴影坐标
+                
+                final_image.alpha_composite(
+                    rounded_img, 
+                    (image_x, image_y)  # 🔄 使用计算后的坐标
+                )
+
+                # 保存结果
                 new_path = f"{os.path.splitext(path)[0]}_mockup.png"
-                new_img.save(new_path)
+                final_image.save(new_path)
                 new_paths.append(new_path)
 
         self.media_paths = new_paths
         self.status_label.configure(text=f"Applied mockup to {len(self.media_paths)} images")
-
 if __name__ == "__main__":
     app = ImageProcessorApp()
     app.mainloop()
