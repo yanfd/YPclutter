@@ -103,3 +103,31 @@ for _ in range(T):
 results = min_edit_time(T, test_cases)
 for res in results:
     print(res)
+
+
+
+
+
+
+
+# def hanoi(n, src, dst, via):
+#     if n == 1:
+#         print(f'{src} -> {dst}')
+#     else:
+#         hanoi(n-1, src, via, dst)
+#         print(f'{src} -> {dst}')
+#         hanoi(n-1, via, dst, src)
+
+
+# if __name__ == '__main__':
+#     n = int(input())
+#     hanoi(n, 'A', 'C', 'B')
+
+
+
+
+
+
+
+
+
