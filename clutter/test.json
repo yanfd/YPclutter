@@ -1,0 +1,9 @@
+{
+    "custom_name": {
+        "description": "自定义名称",
+        "type": "string",
+        "default": "test",
+        "min": 1,
+        "max": 64
+    }
+}

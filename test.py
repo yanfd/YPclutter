@@ -69,40 +69,40 @@
 # print(is_valid_dns_domain(domain))
 
 #4
-def min_edit_time(T, test_cases):
-    results = []
-    for case in test_cases:
-        n, k, tasks = case
-        min_time = float('inf')
+# def min_edit_time(T, test_cases):
+#     results = []
+#     for case in test_cases:
+#         n, k, tasks = case
+#         min_time = float('inf')
         
-        for i in range(n - k + 1):
-            selected = tasks[i:i + k]
-            left, right = 0, k
-            while left < right:
-                mid = (left + right) // 2
-                xiaoming = sum(selected[:mid])
-                xiaobai = sum(selected[mid:])
-                current_max = max(xiaoming, xiaobai)
-                min_time = min(min_time, current_max)
-                if xiaoming < xiaobai:
-                    left = mid + 1
-                else:
-                    right = mid
-        results.append(min_time)
-    return results
+#         for i in range(n - k + 1):
+#             selected = tasks[i:i + k]
+#             left, right = 0, k
+#             while left < right:
+#                 mid = (left + right) // 2
+#                 xiaoming = sum(selected[:mid])
+#                 xiaobai = sum(selected[mid:])
+#                 current_max = max(xiaoming, xiaobai)
+#                 min_time = min(min_time, current_max)
+#                 if xiaoming < xiaobai:
+#                     left = mid + 1
+#                 else:
+#                     right = mid
+#         results.append(min_time)
+#     return results
 
-# 输入
-T = int(input())
-test_cases = []
-for _ in range(T):
-    n, k = map(int, input().split())
-    tasks = list(map(int, input().split()))
-    test_cases.append((n, k, tasks))
+# # 输入
+# T = int(input())
+# test_cases = []
+# for _ in range(T):
+#     n, k = map(int, input().split())
+#     tasks = list(map(int, input().split()))
+#     test_cases.append((n, k, tasks))
 
-# 输出
-results = min_edit_time(T, test_cases)
-for res in results:
-    print(res)
+# # 输出
+# results = min_edit_time(T, test_cases)
+# for res in results:
+    # print(res)
 
 
 
@@ -130,4 +130,29 @@ for res in results:
 
 
 
+import psutil
+import time
 
+def get_network_speed():
+    """计算每秒网络速率"""
+    initial_net = psutil.net_io_counters()
+    time.sleep(1)  # 等待1秒
+    final_net = psutil.net_io_counters()
+
+    # 计算差值
+    bytes_sent = final_net.bytes_sent - initial_net.bytes_sent
+    bytes_recv = final_net.bytes_recv - initial_net.bytes_recv
+    # 转换为MB/s
+    mb_sent = bytes_sent / (1024 * 1024)
+    mb_recv = bytes_recv / (1024 * 1024)
+    return mb_sent, mb_recv
+
+if __name__ == "__main__":
+    sent, recv = get_network_speed()
+    print(f"发送速率: {sent:.2f} MB/s, 接收速率: {recv:.2f} MB/s")
+
+    #可以循环执行，以达到持续监控的目的
+    #while True:
+    #    sent, recv = get_network_speed()
+    #    print(f"发送速率: {sent:.2f} MB/s, 接收速率: {recv:.2f} MB/s")
+    #    time.sleep(1)
