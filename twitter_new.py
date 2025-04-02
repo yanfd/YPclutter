@@ -9,6 +9,7 @@ from tkinter import filedialog
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 # 新增v1客户端认证（用于媒体上传）
+# adding new 
 def get_v1_client():
     auth = tweepy.OAuth1UserHandler(
         consumer_key=os.environ.get("API_KEY"),
