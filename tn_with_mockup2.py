@@ -395,7 +395,7 @@ class twitter_create(ctk.CTk):
                                 bottom_margin = int(height * 0.1)  # 底部留白
                                 text_y = height - text_height - bottom_margin  # 靠近底部
 
-                                draw.text((text_x, text_y), text, font=font, fill="#5E6077")
+                                draw.text((text_x, text_y), text, font=font, fill="#191919")
                         # 保存新图片
                         new_path = f"{os.path.splitext(path)[0]}_mockup.png"
                         img.save(new_path)
