@@ -5,6 +5,7 @@ import os
 import customtkinter as ctk
 from tkinter import filedialog
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
+from atproto import Client
 
 # 假设你已经设置了这两个账号的环境变量
 ACCOUNT_1 = {
@@ -23,6 +24,11 @@ ACCOUNT_2 = {
     "ACCESS_TOKEN_SECRET": os.environ.get("ACCESS_TOKEN_SECRET2"),
     "AVATAR_PATH": "src/Rodrick.png",  # 替换为你的头像路径
     "ACCOUNT_NAME": "Rodrick"       # 可选，显示账号名称
+}
+
+BS_ACCOUNT = {
+    "ACCOUNT": os.environ.get("bs_account"),
+    "PWD": os.environ.get("bs_pwd"),
 }
 
 class twitter_create(ctk.CTk):
@@ -248,6 +254,9 @@ class twitter_create(ctk.CTk):
                 text=text,
                 media_ids=media_ids if media_paths else None
             )
+            client = Client()
+            client.login(BS_ACCOUNT["ACCOUNT"], BS_ACCOUNT["PWD"])
+            post = client.send_post(text)
             print(f"✅ PUBLISHED. ID: {response.data['id']}")
         except tweepy.TweepyException as e:
             print(f"❌ FAILED: {e}")
