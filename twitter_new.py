@@ -110,7 +110,7 @@ class twitter_create(ctk.CTk):
             file_paths = filedialog.askopenfilenames(
                 title="select the pic you wanna share:",
                 filetypes=[("Images", "*.jpg *.png *.jpeg")],
-                initialdir=os.path.expanduser("~/Downloads")
+                initialdir=os.path.expanduser("~/Downloads/StableDiffusion/output/")
             )
             if file_paths:
                 self.media_paths = file_paths
