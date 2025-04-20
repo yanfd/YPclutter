@@ -1,6 +1,7 @@
 import tweepy
+import os
 
-bearer_token = "" # 对于 API v2，推荐使用 Bearer Token
+bearer_token = os.environ.get("BEARER_TOKEN" )# 对于 API v2，推荐使用 Bearer Token
 
 def get_tweet_info(tweet_id):
     client = tweepy.Client(bearer_token)  # 使用 API v2 客户端
