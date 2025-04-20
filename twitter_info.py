@@ -1,6 +1,6 @@
 import tweepy
 
-bearer_token = "AAAAAAAAAAAAAAAAAAAAALTnrQEAAAAASq2mZWi2Dfq%2Bkg9HpVAPhIWaslw%3DIGNGoRIQ88VaVdXQ2hgRpwvZvmsCCtbH8Vm7SannjHUcRUPMPV" # 对于 API v2，推荐使用 Bearer Token
+bearer_token = "" # 对于 API v2，推荐使用 Bearer Token
 
 def get_tweet_info(tweet_id):
     client = tweepy.Client(bearer_token)  # 使用 API v2 客户端
